@@ -1,11 +1,14 @@
 import app from "./src/app.js";
 import dotenv from "dotenv";
+import connectDB from "./src/config/db.js";
 
 dotenv.config();
 
-const PORT = process.env.PORT || 3000;
+// Connect MongoDB
+connectDB();
+
+const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
   console.log(`Local server running on port ${PORT}`);
 });
-
