@@ -2,10 +2,19 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import connectDB from "./config/db.js";
-
-dotenv.config();
+import cookieParser from "cookie-parser";
+import userRoutes from "./routes/userRoutes.js";
+import agentRoutes from "./routes/agentRoutes.js";
+import ngoRoutes from "./routes/ngoRoutes.js";
+import adminRoutes from "./routes/adminRoutes.js";
 
 const app = express();
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+
+dotenv.config();
 
 // Connect MongoDB
 connectDB();
@@ -21,7 +30,11 @@ app.use(
   })
 );
 
-app.use(express.json());
+// Routes
+app.use("/api/users", userRoutes);
+app.use("/api/agents", agentRoutes);
+app.use("/api/ngos", ngoRoutes);
+app.use("/api/admins", adminRoutes);
 
 // Test route
 app.get("/", (req, res) => {
