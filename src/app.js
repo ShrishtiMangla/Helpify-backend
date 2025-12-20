@@ -7,6 +7,7 @@ import userRoutes from "./routes/userRoutes.js";
 import agentRoutes from "./routes/agentRoutes.js";
 import ngoRoutes from "./routes/ngoRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
+import authRoutes from "./routes/authRoutes.js";
 
 const app = express();
 
@@ -31,6 +32,7 @@ app.use(
 );
 
 // Routes
+app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/agents", agentRoutes);
 app.use("/api/ngos", ngoRoutes);

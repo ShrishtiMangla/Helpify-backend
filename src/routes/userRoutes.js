@@ -10,9 +10,6 @@ const router = express.Router();
 // ================= REGISTER USER =================
 router.post("/register", registerUser);
 
-// ================= LOGIN USER =================
-router.post("/login", loginUser);
-
 // ================= LOGOUT USER =================
 router.get("/logout", logoutUser);
 
