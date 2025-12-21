@@ -1,8 +1,11 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 import express from "express";
 import cors from "cors";
-import dotenv from "dotenv";
 import connectDB from "./config/db.js";
 import cookieParser from "cookie-parser";
+
 import userRoutes from "./routes/userRoutes.js";
 import agentRoutes from "./routes/agentRoutes.js";
 import ngoRoutes from "./routes/ngoRoutes.js";
@@ -11,25 +14,22 @@ import authRoutes from "./routes/authRoutes.js";
 
 const app = express();
 
+// Body parsers
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-dotenv.config();
+// ✅ MAIN CORS MIDDLEWARE (MOST IMPORTANT)
+app.use(cors({
+  origin: [
+    "http://localhost:5173",
+    "https://meek-cactus-7a5d94.netlify.app"
+  ],
+  credentials: true
+}));
 
-// Connect MongoDB
+// DB
 connectDB();
-
-// Middleware
-app.use(
-  cors({
-    origin: [
-      "http://localhost:5173",
-      "https://meek-cactus-7a5d94.netlify.app"
-    ],
-    credentials: true
-  })
-);
 
 // Routes
 app.use("/api/auth", authRoutes);
