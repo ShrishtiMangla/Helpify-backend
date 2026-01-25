@@ -51,38 +51,7 @@ export const registerAdmin = async (req, res) => {
     }
 };
 
-// ================= LOGIN ADMIN =================
-export const loginAdmin = async (req, res) => {
-    try {
-        const { email, password } = req.body;
-
-        const admin = await Admin.findOne({ email });
-        if (!admin) {
-            return res.status(400).json({ message: "Invalid credentials" });
-        }
-
-        const isMatch = await bcrypt.compare(password, admin.password);
-        if (!isMatch) {
-            return res.status(400).json({ message: "Invalid credentials" });
-        }
-
-        const token = generateToken(admin._id);
-
-        res
-            .cookie("token", token, {
-                httpOnly: true,
-                secure: false
-            })
-            .json({
-                success: true,
-                message: "Login successful",
-                admin
-            });
-            
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-};      
+   
 // ================= LOGOUT ADMIN =================
 export const logoutAdmin = (req, res) => {
     res

@@ -1,7 +1,6 @@
 import express from "express";
 import {
   registerAdmin,
-  loginAdmin,
   logoutAdmin,
 } from "../controllers/adminController.js";
 

@@ -32,11 +32,8 @@ const ngoSchema = new mongoose.Schema({
             "Disaster Relief & Humanitarian"
         ],
         required: true
-    },
-    verified: {
-        type: Boolean,
-        default: false
     }
+
 }, { timestamps: true });
 
 const NGO = mongoose.model("NGO", ngoSchema);

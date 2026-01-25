@@ -50,26 +50,22 @@ export const login = async (req, res) => {
       });
     }
 
-    // (Optional) NGO verification check
-    if (role === "ngo" && user.verified === false) {
-      return res.status(403).json({
-        success: false,
-        message: "NGO not verified yet"
-      });
-    }
 
     const token = generateToken(user._id, role);
 
     res.status(200)
       .cookie("token", token, {
         httpOnly: true,
-        secure: true,        // REQUIRED for deployed HTTPS
-        sameSite: "none",    // REQUIRED for cross-origin
+          httpOnly: true,
+          secure: process.env.NODE_ENV === "production",
+          sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",    // REQUIRED for cross-origin & https
+          maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
       })
       .json({
         success: true,
         message: "Login successful",
-        role
+        role,
+        user
       });
 
   } catch (error) {

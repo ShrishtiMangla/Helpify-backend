@@ -29,8 +29,7 @@ export const registerNGO = async (req, res) => {
             email,
             password: hashedPassword,
             address,
-            category,
-            verified
+            category
         });
 
         const token = generateToken(ngo._id);
@@ -54,54 +53,6 @@ export const registerNGO = async (req, res) => {
     }
 };
 
-// ================= LOGIN NGO =================
-export const loginNGO = async (req, res) => {
-    try {
-        const { email, password } = req.body;
-
-        if (!email || !password) {
-            return res.status(400).json({
-                success: false,
-                message: "Email and password are required"
-            });
-        }
-
-        const ngo = await NGO.findOne({ email });
-        if (!ngo) {
-            return res.status(404).json({
-                success: false,
-                message: "NGO not found"
-            });
-        }
-
-        const isMatch = await bcrypt.compare(password, ngo.password);
-        if (!isMatch) {
-            return res.status(401).json({
-                success: false,
-                message: "Invalid credentials"
-            });
-        }
-
-        const token = generateToken(ngo._id);
-
-        res.status(200)
-            .cookie("token", token, {
-                httpOnly: true,
-                secure: false
-            })
-            .json({
-                success: true,
-                message: "Login successful",
-                ngo
-            });
-
-    } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: error.message
-        });
-    }
-};
 
 // ================= LOGOUT NGO =================
 export const logoutNGO = (req, res) => {

@@ -33,10 +33,10 @@ connectDB();
 
 // Routes
 app.use("/api/auth", authRoutes);
-app.use("/api/users", userRoutes);
-app.use("/api/agents", agentRoutes);
-app.use("/api/ngos", ngoRoutes);
-app.use("/api/admins", adminRoutes);
+app.use("/api/user", userRoutes);
+app.use("/api/agent", agentRoutes);
+app.use("/api/ngo", ngoRoutes);
+app.use("/api/admin", adminRoutes);
 
 // Test route
 app.get("/", (req, res) => {
