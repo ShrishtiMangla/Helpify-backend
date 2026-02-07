@@ -1,26 +1,48 @@
 import mongoose from "mongoose";
 
-const donationSchema = new mongoose.Schema({
-    userId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-        required: true
+const donationSchema = new mongoose.Schema(
+  {
+    donorId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true
     },
+
     ngoId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "NGO",
-        required: true
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "NGO",
+      required: true
     },
+
+    donationType: {
+      type: String,
+      enum: ["money", "goods"],
+      required: true
+    },
+
+    // 💰 Money donation
+    amount: {
+      type: Number
+    },
+
+    // 📦 Goods donation
+    items: {
+      type: String // simple text like "Clothes, Books"
+    },
+
+    // 🚚 Delivery (only for goods)
     agentId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Agent"
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Agent"
     },
-    type: {
-        type: String,
-        enum: ["Money", "Goods"]
+
+    status: {
+      type: String,
+      enum: ["pending", "completed"],
+      default: "pending"
     }
-}, { timestamps: true });
+  },
+  { timestamps: true }
+);
 
-const Donation = mongoose.model("Donation", donationSchema);
-
-export default Donation;
+export default mongoose.model("Donation", donationSchema);

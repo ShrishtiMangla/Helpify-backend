@@ -11,6 +11,10 @@ import agentRoutes from "./routes/agentRoutes.js";
 import ngoRoutes from "./routes/ngoRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
+import paymentRoutes from "./routes/paymentRoutes.js";
+import donationRoutes from "./routes/donationRoutes.js";
+
+
 
 const app = express();
 
@@ -37,6 +41,12 @@ app.use("/api/user", userRoutes);
 app.use("/api/agent", agentRoutes);
 app.use("/api/ngo", ngoRoutes);
 app.use("/api/admin", adminRoutes);
+
+app.use("/api/payment", paymentRoutes);
+app.use("/api/donations", donationRoutes);
+
+//get all ngos page 
+app.use("/ngo", ngoRoutes);
 
 // Test route
 app.get("/", (req, res) => {

@@ -1,3 +1,4 @@
+import express from "express";
 import NGO from "../models/NGO.js";
 import bcrypt from "bcryptjs";
 import generateToken from "../utils/generateToken.js";
@@ -66,4 +67,21 @@ export const logoutNGO = (req, res) => {
             message: "Logged out successfully"
         });
 };
+
+
+export const getAllNGOs = async (req, res) => {
+  try {
+    const ngos = await NGO.find().select("-password");
+    res.status(200).json({
+      success: true,
+      ngos
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Failed to fetch NGOs"
+    });
+  }
+};
+
 
