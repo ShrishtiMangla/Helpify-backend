@@ -1,25 +1,15 @@
 import express from "express";
-import donationSchema from "../models/Donation.js";
+import { createGoodsDonation , createDonation , getDonationById } from "../controllers/donationController.js";
+
 
 const router = express.Router();
 
-router.post("/", async (req, res) => {
-  try {
-    console.log("Donation received:", req.body); // 👈 ADD THIS
+router.post("/goods", createGoodsDonation);
 
-    const donation = await donationSchema.create(req.body);
+router.post("/", createDonation);
 
-    console.log("Donation saved:", donation); // 👈 ADD THIS
-    res.status(201).json({
-      success: true,
-      donation
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: "Failed to save donation"
-    });
-  }
-});
+router.get("/:id", getDonationById);
+
+
 
 export default router;

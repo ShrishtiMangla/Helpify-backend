@@ -3,6 +3,8 @@ import {
     registerAgent,
     logoutAgent,
 } from "../controllers/agentController.js";
+import { getAgentDonations } from "../controllers/agentController.js";
+import  protectAgent from "../middleware/protectAgent.js";
 
 const router = express.Router();
 
@@ -12,5 +14,9 @@ router.post("/register", registerAgent);
 
 // ================= LOGOUT AGENT =================
 router.get("/logout", logoutAgent);
+
+
+router.get("/donations", protectAgent,getAgentDonations);
+
 
 export default router;

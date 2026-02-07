@@ -1,6 +1,7 @@
 import Agent from "../models/Agent.js";
 import bcrypt from "bcryptjs";
 import generateToken from "../utils/generateToken.js";
+import Donation from "../models/Donation.js";
 
 // ================= REGISTER AGENT =================
 export const registerAgent = async (req, res) => {
@@ -67,3 +68,22 @@ export const logoutAgent = (req, res) => {
             message: "Agent logged out successfully"
         });
 };  
+
+
+
+export const getAgentDonations = async (req, res) => {
+  try {
+    const agentId = req.user._id; // from protectAgent
+
+    const donations = await Donation.find({ agentId })
+      .populate("donorId", "name phone")
+      .populate("ngoId", "name phone")
+      .sort({ createdAt: -1 });
+
+    res.status(200).json(donations); // ✅ DIRECT ARRAY
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+

@@ -37,10 +37,11 @@ const donationSchema = new mongoose.Schema(
     },
 
     status: {
-      type: String,
-      enum: ["pending", "completed"],
-      default: "pending"
+        type: String,
+        enum: ["pending", "picked", "delivered"],
+        default: "pending"
     }
+
   },
   { timestamps: true }
 );
