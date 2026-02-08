@@ -1,6 +1,7 @@
 import User from "../models/User.js";
 import bcrypt from "bcryptjs";
 import generateToken from "../utils/generateToken.js";
+import Donation from "../models/Donation.js";
 
 // ================= REGISTER =================
 export const registerUser = async (req, res) => {
@@ -55,3 +56,20 @@ export const logoutUser = (req, res) => {
       message: "Logged out successfully"
     });
 };
+
+
+export const getUserDonations = async (req, res) => {
+  try {
+    const donations = await Donation.find({
+      donorId: req.user._id
+    })
+      .populate("ngoId", "name")
+      .sort({ createdAt: -1 });
+
+    res.json(donations);
+  } catch (err) {
+    console.error("USER DONATIONS ERROR:", err);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
