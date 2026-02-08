@@ -29,8 +29,10 @@ app.use(cors({
     "http://localhost:5173",
     "https://help-ify.netlify.app"
   ],
-  credentials: true
+  credentials: true,
+   methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
 }));
+
 
 // DB
 connectDB();
