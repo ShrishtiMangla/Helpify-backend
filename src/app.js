@@ -27,7 +27,7 @@ app.use(cookieParser());
 app.use(cors({
   origin: [
     "http://localhost:5173",
-    "https://meek-cactus-7a5d94.netlify.app"
+    "https://help-ify.netlify.app/"
   ],
   credentials: true
 }));
