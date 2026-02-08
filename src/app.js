@@ -27,7 +27,7 @@ app.use(cookieParser());
 app.use(cors({
   origin: [
     "http://localhost:5173",
-    "https://help-ify.netlify.app"
+    "http://helpify-frontend.vercel.app"
   ],
   credentials: true,
    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],

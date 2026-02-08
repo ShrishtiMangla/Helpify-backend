@@ -9,8 +9,15 @@ export const createGoodsDonation = async (req, res) => {
       return res.status(400).json({ message: "Items and address required" });
     }
 
-    // 1️⃣ Find any delivery agent
-    const agent = await Agent.findOne();
+    // 1️⃣ Find a RANDOM delivery agent
+    // We use aggregate with $sample to get a random document
+    const randomAgents = await Agent.aggregate([
+       // { $match: { status: 'active' } }, // Uncomment if you have an active status
+       { $sample: { size: 1 } }
+    ]);
+
+    const agent = randomAgents[0];
+
     if (!agent) {
       return res.status(404).json({ message: "No delivery agent available" });
     }
