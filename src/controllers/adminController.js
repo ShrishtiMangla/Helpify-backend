@@ -1,6 +1,8 @@
 import Admin from "../models/Admin.js";
 import bcrypt from "bcryptjs";
 import generateToken from "../utils/generateToken.js";
+import Donation from "../models/Donation.js";
+
 
 // ================= REGISTER ADMIN =================
 export const registerAdmin = async (req, res) => {
@@ -65,3 +67,21 @@ export const logoutAdmin = (req, res) => {
         });
 }
 ;       
+
+export const getAllDonations = async (req, res) => {
+  try {
+    console.log("ADMIN HIT →", req.user);
+    const donations = await Donation.find()
+      .populate("donorId", "username email phone")
+      .populate("ngoId", "name phone")
+      .populate("agentId", "name phone")
+      .sort({ createdAt: -1 });
+
+    res.status(200).json(donations);
+  } catch (error) {
+    console.error("Admin fetch error:", error);
+    res.status(500).json({
+      message: "Failed to fetch admin donations",
+    });
+  }
+};
