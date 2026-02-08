@@ -2,8 +2,10 @@ import express from "express";
 import {
   registerNGO,
     logoutNGO,
-    getAllNGOs
+    getAllNGOs,
+    getNgoDonations
 } from "../controllers/ngoController.js";
+import {protectNGO} from "../middleware/protectNgo.js";
 
 const router = express.Router();
 
@@ -15,5 +17,7 @@ router.get("/logout", logoutNGO);
 
 // ================= GET ALL NGOs =================
 router.get("/", getAllNGOs);
+
+router.get("/donations", protectNGO ,getNgoDonations);
 
 export default router;

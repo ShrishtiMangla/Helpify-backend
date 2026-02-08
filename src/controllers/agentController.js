@@ -76,8 +76,8 @@ export const getAgentDonations = async (req, res) => {
     const agentId = req.user._id; // from protectAgent
 
     const donations = await Donation.find({ agentId })
-      .populate("donorId", "name phone")
-      .populate("ngoId", "name phone")
+      .populate("donorId", "username")
+      .populate("ngoId", "name")
       .sort({ createdAt: -1 });
 
     res.status(200).json(donations); // ✅ DIRECT ARRAY
@@ -87,3 +87,20 @@ export const getAgentDonations = async (req, res) => {
   }
 };
 
+export const updateDonationStatus = async (req, res) => {
+  try {
+    const { status } = req.body;
+
+    const donation = await Donation.findById(req.params.id);
+    if (!donation) {
+      return res.status(404).json({ message: "Donation not found" });
+    }
+
+    donation.status = status;
+    await donation.save();
+
+    res.json(donation);
+  } catch (error) {
+    res.status(500).json({ message: "Status update failed" });
+  }
+};

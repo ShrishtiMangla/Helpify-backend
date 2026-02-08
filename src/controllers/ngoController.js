@@ -2,6 +2,7 @@ import express from "express";
 import NGO from "../models/NGO.js";
 import bcrypt from "bcryptjs";
 import generateToken from "../utils/generateToken.js";
+import Donation from "../models/Donation.js";
 
 // ================= REGISTER NGO =================
 export const registerNGO = async (req, res) => {
@@ -81,6 +82,26 @@ export const getAllNGOs = async (req, res) => {
       success: false,
       message: "Failed to fetch NGOs"
     });
+  }
+};
+
+
+export const getNgoDonations = async (req, res) => {
+  try {
+    console.log("REQ.USER 👉", req.user); // 🔥 VERY IMPORTANT
+
+    if (!req.user) {
+      return res.status(401).json({ message: "User not authenticated" });
+    }
+
+    const donations = await Donation.find({ ngoId: req.user._id })
+      .populate("donorId", "username email")
+      .populate("agentId", "name phone");
+
+    res.json(donations);
+  } catch (err) {
+    console.error("NGO DONATION ERROR 👉", err);
+    res.status(500).json({ message: "Server error" });
   }
 };
 
