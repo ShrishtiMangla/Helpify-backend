@@ -16,7 +16,7 @@ export const protect = async (req, res, next) => {
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    // 🔥 ADMIN ROUTES
+    
     if (req.originalUrl.startsWith("/api/admin")) {
       const admin = await Admin.findById(decoded.id).select("-password");
 
@@ -29,7 +29,7 @@ export const protect = async (req, res, next) => {
       return next();
     }
 
-    // 👤 USER ROUTES
+
     const user = await User.findById(decoded.id).select("-password");
 
     if (!user) {
