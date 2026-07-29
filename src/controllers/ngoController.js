@@ -151,14 +151,17 @@ export const getRecommendedNGOs = async (req, res) => {
           userCoordinates,
           ngoCoordinates
         );
-       
+
         const mlResponse = await axios.post(
-          "http://localhost:5001/predict",
+          `${process.env.ML_API_URL}/predict`,
           {
             distance_km: distance / 1000,
-          ngo_category: ngo.category,
-          preferred_category: ngoPreference,
-          item,
+            ngo_category: ngo.category,
+            preferred_category: ngoPreference,
+            item,
+          },
+          {
+            timeout: 30000,
           }
         );
 
