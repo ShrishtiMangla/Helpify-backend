@@ -15,7 +15,7 @@ const ngoSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
-    password: {                 // ✅ REQUIRED
+    password: {                 
         type: String,
         required: true
     },

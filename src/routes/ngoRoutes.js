@@ -3,7 +3,8 @@ import {
   registerNGO,
     logoutNGO,
     getAllNGOs,
-    getNgoDonations
+    getNgoDonations,
+    getRecommendedNGOs
 } from "../controllers/ngoController.js";
 import {protectNGO} from "../middleware/protectNgo.js";
 
@@ -17,6 +18,8 @@ router.get("/logout", logoutNGO);
 
 // ================= GET ALL NGOs =================
 router.get("/", getAllNGOs);
+
+router.post("/recommendations", getRecommendedNGOs);
 
 router.get("/donations", protectNGO ,getNgoDonations);
 
